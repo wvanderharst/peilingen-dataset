@@ -96,11 +96,12 @@ def categorizevariance(name,df):
         N4 =  df[name].iloc[-400]
         return max(checker(N1, N2),checker(N1, N3),checker(N1, N4),checker(N2, N3),checker(N2, N4),checker(N3, N4))
        
-def montecarloelection(df,sigma,dataframe):
-    df2 = df["Zetels peiling "]
+def montecarloelection(df):
+    df2 = df["Zetels"]
     for i in range(0,len((df2))):
         name = df["Naam"][i]
-        CAT = categorizevariance(name,dataframe)
+        #CAT = categorizevariance(name,dataframe)
+        CAT = 2
         df2[i] = df2[i] + np.random.normal(0,( 0.15 * CAT**2  * df2[i])) 
         if df2[i] < 0:
             df2[i] = 0
@@ -133,34 +134,10 @@ def distance(parties,table):
         for j in range(0,len(parties)):
             party1 = parties[i]
             party2 = parties[j] 
+
             totaldistance += table[party1][party2]**2
     return totaldistance / ((len(parties)**2 +len(parties))/2) * (1+(len(parties)/50))
           
-def partyhate(parties):
-    if "PVV" in parties:
-        if "VVD" in parties:           
-            parties = []
-        elif "CDA" in parties:           
-            parties = []
-        elif "D66" in parties:           
-            parties = []
-        elif "VOLT" in parties:           
-            parties = []
-        elif "GL" in parties:           
-            parties = []
-    elif "FVD" in parties:
-        if "VVD" in parties:           
-            parties = []
-        elif "CDA" in parties:           
-            parties = []
-        elif "D66" in parties:           
-            parties = []
-        elif "VOLT" in parties:           
-            parties = []
-        elif "GL" in parties:           
-            parties = []
-    return parties 
-
 
 def possiblecombinations(allparties,table,df,P):
     totaldistance = 10000000
@@ -174,8 +151,6 @@ def possiblecombinations(allparties,table,df,P):
         for subset in itertools.combinations(stuff, L):
             
             mogregering = list(subset)
-            if  np.random.normal(0,1) < 1.96:
-                mogregering = partyhate(mogregering)
             if len(mogregering) > P:
                 return [regering, secondregering, thirdregering,totaldistance,seconddistance,thirddistance]
             if seats(mogregering,df) > 75:
@@ -217,6 +192,11 @@ for i in range(0,N):
     man["reger"][i]= ", ".join(note[0])
     man["reger2"][i]= ", ".join(note[1])
     man["reger3"][i]= ", ".join(note[2])
+    man["dis1"][i]= ", ".join(note[3])
+    man["dis2"][i]= ", ".join(note[4]])
+    man["dis3"][i]= ", ".join(note[5])
+
+    print 
    
 
 ratio1 = man['reger'].value_counts()/N
