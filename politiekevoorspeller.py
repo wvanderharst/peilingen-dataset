@@ -1,50 +1,11 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 26 22:28:33 2022
-
-@author: woute
-"""
-
 
 import pandas as pd
 import numpy as np
-import itertools
-import matplotlib.pyplot as plt
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from datetime import datetime
-import time 
 
-def recentdata():
-    now = datetime.now() # current date and time
-    date_time = now.strftime("%m/%d/%Y")
-    date_time = date_time.replace('/', '')
+df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
 
-    folder = "C:\Tutorial\down\omega" + date_time
+df = load_data()
 
-    options = webdriver.ChromeOptions()
-    prefs = {"download.default_directory" : folder }
-    options.add_experimental_option("prefs",prefs)
-
-
-    driver = webdriver.Chrome(executable_path = "chromedriver",options = options)
-
-
-    url1 = "https://peilingwijzer.tomlouwerse.nl/resources/Results_Longitudinal.xlsx"
-
-    driver.get(url1)
-    time.sleep(5)
-    data = pd.read_excel(folder + "\Results_Longitudinal.xlsx")
-    driver.quit()
-    
-    
-    return data 
-
-
-
-
-df = recentdata()
 df = df[df.columns.drop(list(df.filter(regex='.low')))]
 df = df[df.columns.drop(list(df.filter(regex='.high')))]
 dataframe = df
