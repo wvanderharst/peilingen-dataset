@@ -4,12 +4,15 @@ import streamlit as st
 
 # Show the page title and description.
 st.set_page_config(page_title="Movies dataset", page_icon="🎬")
-st.title("🎬 Movies dataset")
+
+# Show the page title and description.
+st.set_page_config(page_title="Peilingen")
+st.title("Peilingen")
 st.write(
     """
-    This app visualizes data from [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
-    It shows which movie genre performed best at the box office over the years. Just 
-    click on the widgets below to explore!
+    In nederland wordt gekeken naar peilingen van 
+    individuele partijen, terwijl we een land van
+      coalties leven. Op mijn website maak ik duidelijk wat de coalitie tendesen zijn.
     """
 )
 
@@ -18,44 +21,40 @@ st.write(
 # reruns (e.g. if the user interacts with the widgets).
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/movies_genres_summary.csv")
+    df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
     return df
 
 
 df = load_data()
 
 # Show a multiselect widget with the genres using `st.multiselect`.
-genres = st.multiselect(
-    "Genres",
-    df.genre.unique(),
-    ["Action", "Adventure", "Biography", "Comedy", "Drama", "Horror"],
+partij = st.multiselect(
+    "Partij",
+    df.Partij.unique(),
+    ["PVV"],
 )
 
-# Show a slider widget with the years using `st.slider`.
-years = st.slider("Years", 1986, 2006, (2000, 2016))
 
 # Filter the dataframe based on the widget input and reshape it.
-df_filtered = df[(df["genre"].isin(genres)) & (df["year"].between(years[0], years[1]))]
-df_reshaped = df_filtered.pivot_table(
-    index="year", columns="genre", values="gross", aggfunc="sum", fill_value=0
-)
-df_reshaped = df_reshaped.sort_values(by="year", ascending=False)
-
+df_filtered = df[(df["Partij"].isin(partij)) ]
+df_filtered2 = df_filtered[["Partij","Percentage","Zetels"]]
+if len(df_filtered2.Partij.unique())>1:
+    df_filtered2.loc['total']= df_filtered2.sum()
 
 # Display the data as a table using `st.dataframe`.
 st.dataframe(
-    df_reshaped,
-    use_container_width=True,
-    column_config={"year": st.column_config.TextColumn("Year")},
+    df_filtered2
 )
+
+st.bar_chart(df_filtered2,x="Partij",y="Zetels")
 
 # Display the data as an Altair chart using `st.altair_chart`.
 df_chart = pd.melt(
-    df_reshaped.reset_index(), id_vars="year", var_name="genre", value_name="gross"
+    df_filtered2.reset_index(), 
 )
+
 chart = (
     alt.Chart(df_chart)
-    .mark_line()
     .encode(
         x=alt.X("year:N", title="Year"),
         y=alt.Y("gross:Q", title="Gross earnings ($)"),
