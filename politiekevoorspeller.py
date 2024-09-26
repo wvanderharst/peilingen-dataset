@@ -13,7 +13,7 @@ dataframe = df
 dataframe2 = dataframe.iloc[-1][1:]
 
 
-df = pd.read_excel("politiek.xlsx")
+df = pd.read_excel("Data\politiek.xlsx")
 
 
 df = df.merge(dataframe2, left_on='Naam',right_index=(True))
