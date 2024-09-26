@@ -4,7 +4,7 @@ import itertools
 import time
 
 
-df = pd.read_excel("https://github.com/wvanderharst/peilingen-dataset/blob/main/data/Politiek.xlsx")
+df = pd.read_excel("data/Politiek.xlsx")
 
 def load_data():
     df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
