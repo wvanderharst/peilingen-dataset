@@ -3,6 +3,7 @@ name: run test.py
 on:
   schedule:
     - cron: '*/6 * * * *' # At 00:00 on Monday
+  workflow_dispatch:
 
 jobs:
   build:
