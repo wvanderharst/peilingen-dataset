@@ -41,6 +41,13 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+      - name: Upload CSV files
+        uses: actions/upload-artifact@v2
+        with:
+          name: csv-files
+          path: data/
+
+
        
       - name: push changes
         uses: ad-m/github-push-action@v0.6.0
