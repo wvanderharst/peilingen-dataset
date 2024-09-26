@@ -4,6 +4,7 @@ import streamlit as st
 
 # Show the page title and description.
 st.set_page_config(page_title="Peilingen")
+
 st.title("Peilingen")
 st.write(
     """
@@ -16,7 +17,7 @@ st.write(
 
 # Load the data from a CSV. We're caching this so it doesn't reload every time the app
 # reruns (e.g. if the user interacts with the widgets).
-@st.cache_data
+
 def load_data():
     df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
     return df
