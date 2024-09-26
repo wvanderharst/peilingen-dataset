@@ -3,14 +3,11 @@ import pandas as pd
 import streamlit as st
 
 # Show the page title and description.
-st.set_page_config(page_title="Movies dataset", page_icon="🎬")
-
-# Show the page title and description.
 st.set_page_config(page_title="Peilingen")
 st.title("Peilingen")
 st.write(
     """
-    In nederland wordt gekeken naar peilingen van 
+    In Nederland wordt gekeken naar peilingen van 
     individuele partijen, terwijl we een land van
       coalties leven. Op mijn website maak ik duidelijk wat de coalitie tendesen zijn.
     """
