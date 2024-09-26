@@ -7,7 +7,6 @@ import time
 
 df = pd.read_excel("politiek.xlsx")
 
-
 def load_data():
     df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
     return df
@@ -71,7 +70,6 @@ def possiblecombinations(allparties,table,df,P):
             mogregering = list(subset)
 
             mogregering = superpartyhate(mogregering)
-
             if  populism > 0:
                 mogregering = partyhate(mogregering)
             if len(mogregering) > P:
@@ -80,9 +78,7 @@ def possiblecombinations(allparties,table,df,P):
                 P = P + 1 
             if seats(mogregering,df) > 75:
                 dist = distance(mogregering,table)
-                if dist < totaldistance:
-
-                    
+                if dist < totaldistance: 
                     thirdregering = secondregering
                     secondregering = regering
                     regering = mogregering
@@ -152,13 +148,15 @@ def montecarloelection(df):
             df9.loc[i, 'Zetels'] += -1  
     return df9
 
-N =  1000
+N =  3
 P= 5
 allparties = set(df3["Partij"])
 
-df11 = []
+df11 = pd.DataFrame()
 man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","dis2","dis3"] )
+
 for i in range(0,N):
+    print(i)
     df7 = montecarloelection(df3)
     note = possiblecombinations(allparties,table,df7,P)
     man.loc[i,"reger"]= ", ".join(note[0])
@@ -167,8 +165,13 @@ for i in range(0,N):
     man.loc[i,"dis1"]= note[3]
     man.loc[i,"dis2"]= note[4]
     man.loc[i,"dis3"]= note[5]
-    df11 = [df11, df7]
+    if i == 0:
+        print(df7)
+        df11 = pd.DataFrame(df7)
+    else:
+        df11 = df11.merge(pd.DataFrame(df7), on='Partij')
 
-man.to_csv("your_preferred_name.csv")
 
+man.to_csv("data\coalitions.csv")
+df11.to_csv("data\elections.csv")
    
