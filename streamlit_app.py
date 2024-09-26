@@ -48,18 +48,3 @@ st.dataframe(
 
 st.bar_chart(df_filtered2,x="Partij",y="Zetels")
 
-# Display the data as an Altair chart using `st.altair_chart`.
-df_chart = pd.melt(
-    df_filtered2.reset_index(), 
-)
-
-chart = (
-    alt.Chart(df_chart)
-    .encode(
-        x=alt.X("year:N", title="Year"),
-        y=alt.Y("gross:Q", title="Gross earnings ($)"),
-        color="genre:N",
-    )
-    .properties(height=320)
-)
-st.altair_chart(chart, use_container_width=True)
