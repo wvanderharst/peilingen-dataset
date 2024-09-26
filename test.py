@@ -171,6 +171,6 @@ for i in range(0,N):
         df11 = df11.merge(pd.DataFrame(df7), on='Partij')
 
 
-man.to_csv("data\coalitions.csv")
-df11.to_csv("data\elections.csv")
+man.to_csv("data/coalitions.csv")
+df11.to_csv("data/elections.csv")
    
