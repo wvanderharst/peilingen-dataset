@@ -1,4 +1,4 @@
-name: run voorspelling.py
+name: run test.py
 
 on:
   schedule:
@@ -22,8 +22,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: execute py script # run main.py
-        run: python voorspelling.py
+      - name: execute py script # run test.py
+        run: python test.py
           
       - name: commit files
         run: |
