@@ -5,10 +5,6 @@ import time
 ## funcations 
 
 
-
-
-
-
 #functions
 
 
