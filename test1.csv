@@ -1,7 +1,11 @@
 ,bar,count_x,count_y,count
-0,"BBB, NSC, PVV, VVD, JA21",0.6666666666666666,,
-1,"BBB, NSC, PVV, SGP, VVD",0.3333333333333333,,0.3333333333333333
-2,"BBB, NSC, PVV, VVD",,0.6666666666666666,
-3,"BBB, NSC, PVV, SGP, VVD, JA21",,0.3333333333333333,
-4,"BBB, NSC, FvD, PVV, VVD, JA21",,,0.3333333333333333
-5,"BBB, PVV, VVD, JA21",,,0.3333333333333333
+0,"('BBB', 'VVD', 'NSC', 'JA21', 'PVV')",0.4,,
+1,"('CDA', 'BBB', 'VVD', 'GL/PvdA', 'NSC')",0.4,,
+2,"('BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'JA21', 'PVV')",0.2,,
+3,"('BBB', 'VVD', 'NSC', 'PVV')",,0.4,
+4,"('CDA', '50PLUS', 'BBB', 'VVD', 'GL/PvdA', 'NSC')",,0.4,
+5,"('BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'PVV')",,0.2,
+6,"('BBB', 'VVD', 'JA21', 'PVV')",,,0.4
+7,"('CDA', 'VVD', 'SGP', 'GL/PvdA', 'NSC')",,,0.2
+8,"('50PLUS', 'BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'JA21', 'PVV')",,,0.2
+9,"('CDA', 'BBB', 'VVD', 'SGP', 'GL/PvdA', 'NSC')",,,0.2

@@ -2,6 +2,11 @@
 import pandas as pd
 import numpy as np
 
+
+import pandas as pd 
+
+df_distance = pd.read_csv("data\distance.xlsx")
+
 df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
 
 df = load_data()

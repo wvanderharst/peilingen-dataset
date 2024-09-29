@@ -5,6 +5,7 @@ import time
 ## funcations 
 
 
+
 #functions
 
 
@@ -47,7 +48,7 @@ def seats(parties,df):
 def findalldistances(allparties,table):
     pairs_dict = {}
     #for L in range(len(allparties) + 1):
-    for L in range(1,5):
+    for L in range(1,12):
         for subset in itertools.combinations(allparties, L):
             mogregering = list(subset)
             dist = distance(mogregering,table)
@@ -65,49 +66,32 @@ def findalldistances(allparties,table):
     return df_distance
 
 
-def possiblecombinations(allparties,table,df,P):
-    totaldistance = 10000000
-    seconddistance = 10000000
-    thirddistance = 10000000
+def possiblecombinations(df_distance,table,df):
     regering = ""
     secondregering = ""
     thirdregering = ""
     populism = np.random.normal(0,1) 
-    checking = False
-    for L in range(len(allparties) + 1):
-        for subset in itertools.combinations(allparties, L):
-            mogregering = list(subset)
+    count = 0
+    for i in range(len(df_distance)):
+        mogregering = df_distance.loc[i,"Key"] 
+        mogregering = superpartyhate(mogregering)
+        if  populism > 0:
+            mogregering = partyhate(mogregering) 
+        if seats(mogregering,df) > 75:
+            
+            count = count + 1 
+            dist = df_distance.loc[i,"Value"] 
+            if count == 1 : 
+                regering = mogregering
+                totaldistance = dist
+            elif count == 2: 
+                secondregering = mogregering
+                seconddistance = dist
+            elif count == 3:
+                thirdregering = mogregering
+                thirddistance = dist
 
-            mogregering = superpartyhate(mogregering)
-            if  populism > 0:
-                mogregering = partyhate(mogregering)
-            if len(mogregering) > P:
-                if checking:
-                    return [regering, secondregering, thirdregering,totaldistance,seconddistance,thirddistance]
-                P = P + 1 
-            if seats(mogregering,df) > 75:
-                dist = distance(mogregering,table)
-                if dist < totaldistance: 
-                    thirdregering = secondregering
-                    secondregering = regering
-                    regering = mogregering
-                    
-                    thirddistance = seconddistance
-                    seconddistance = totaldistance
-                    totaldistance = dist
-
-                elif dist < seconddistance:
-                    
-                    thirdregering = secondregering
-                    secondregering = mogregering
-
-                    thirddistance = seconddistance
-                    seconddistance = dist
-                elif dist <thirddistance:
-                    thirdregering = mogregering
-                    thirddistance = dist
-                    checking = True
-                       
+                return [regering, secondregering, thirdregering,totaldistance,seconddistance,thirddistance]   
     return [regering, secondregering, thirdregering,totaldistance,seconddistance,thirddistance]
 
 def partyhate(parties):
@@ -166,8 +150,10 @@ df = pd.read_excel("data\Politiek.xlsx")
 df_check = pd.read_excel("Data\politiek - Stable.xlsx")
 
 if df.equals(df_check):
-    trip  = 8
+    print("JA")
+    df_distance = pd.read_csv("Data\distances.csv")
 else:
+    print("Nee")
     df2 = load_data()
     df3 = df.merge(df2, how='outer', on='Partij')
 
@@ -183,9 +169,7 @@ else:
     findalldistances(allparties,table)
     df_distance = findalldistances(allparties,table)
     df_distance.to_csv("data\distances.csv")
-
-breakpoint
-
+    df.to_excel("Data\politiek - Stable.xlsx")
 
 
 df2 = load_data()
@@ -200,20 +184,11 @@ table = pd.DataFrame(0.0,columns= df4["Partij"],index=df4["Partij"])
 
 table2 = tablecreator(table,df4)
 
-
-
 #check
-
-
-
 
 #mainscript
 
-
-
-
-
-N =  3
+N =  5
 P= 5
 allparties = set(df3["Partij"])
 
@@ -221,18 +196,22 @@ df11 = pd.DataFrame()
 man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","dis2","dis3"] )
 
 for i in range(0,N):
+    start_time = time.time()
+
     df7 = montecarloelection(df3)
-    note = possiblecombinations(allparties,table2,df7,P)
-    man.loc[i,"reger"]= ", ".join(note[0])
-    man.loc[i,"reger2"]= ", ".join(note[1])
-    man.loc[i,"reger3"]= ", ".join(note[2])
+    note = possiblecombinations(df_distance,table2,df7)
+    man.loc[i,"reger"]= note[0]
+    man.loc[i,"reger2"]= note[1]
+    man.loc[i,"reger3"]= note[2]
     man.loc[i,"dis1"]= note[3]
     man.loc[i,"dis2"]= note[4]
     man.loc[i,"dis3"]= note[5]
+    df7 = df7.rename(columns={"Zetels": i})
     if i == 0:
         df11 = pd.DataFrame(df7)
     else:
         df11 = df11.merge(pd.DataFrame(df7), on='Partij')
+    
 
 
 man.to_csv("data\coalitions.csv")
@@ -250,25 +229,15 @@ ratio1 =  ratio1.rename_axis('bar').reset_index()
 ratio2 =  ratio2.rename_axis('bar').reset_index()
 ratio3 =  ratio3.rename_axis('bar').reset_index()
 
-ratio1.to_csv("test2.csv")
+ratio1.to_csv("ratio2.csv")
 
 
 full = pd.merge(ratio1,ratio2,on = "bar", how = "outer")
 full = pd.merge(full,ratio3,on = "bar", how = "outer")
 
 full.to_csv("test1.csv")
-
-
-full["prefer"] = 200.0
-
-
-
-
-for i in range(0,len(full)):
-    string = full.loc[i,"bar"]
-    li = list(string.split(", "))
-    full.loc[i,"prefer"] = distance(li,table)
 full = full.fillna(0)
+
 
 partygov = pd.DataFrame(np.zeros((4,len(allparties))),columns=list(allparties)
                          )
@@ -277,13 +246,17 @@ full.to_csv("test2.csv")
 for j in allparties:
     for i in range(0,len(full)):
         string = full["bar"][i]
-        li = list(string.split(", "))
-        if j in li:
-            partygov[j][0] += 100 * full["count_x"][i]
-            partygov[j][1] += 100 * full["count_y"][i]
-            partygov[j][2] += 100 * full["count"][i]
+        my_list = [item.strip().strip("'") for item in string[1:-1].split(',')]
+        if j in my_list:
+            
+            partygov[j][0] += full["count_x"][i]
+            partygov[j][1] +=  full["count_y"][i]
+            partygov[j][2] +=  full["count"][i]
 
-    partygov[j] = partygov[j]/100
-    partygov[j][3] = (0.60 * partygov[j][0] + 0.30 * partygov[j][1] + 0.1 * partygov[j][2])
+    partygov[j][3] = (0.60 * partygov[j][0] + 0.30 * partygov[j][1] + 0.1 * partygov[j][2]) * 100
+
+partygov = partygov.T
+partygov = partygov.reset_index()
+partygov.rename(columns={'index': 'Partij'}, inplace=True)
 
 partygov.to_csv("data\partygov.csv")

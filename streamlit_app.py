@@ -20,7 +20,7 @@ st.write(
 
 @st.cache_data
 def load_data():
-    df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
+    df = pd.read_csv("data\partygov.csv")
     return df
 
 
