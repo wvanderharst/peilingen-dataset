@@ -1,11 +1,15 @@
 ,bar,count_x,count_y,count
-0,"('BBB', 'VVD', 'NSC', 'JA21', 'PVV')",0.4,0.0,0.0
-1,"('CDA', 'BBB', 'VVD', 'GL/PvdA', 'NSC')",0.4,0.0,0.0
-2,"('BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'JA21', 'PVV')",0.2,0.0,0.0
-3,"('BBB', 'VVD', 'NSC', 'PVV')",0.0,0.4,0.0
-4,"('CDA', '50PLUS', 'BBB', 'VVD', 'GL/PvdA', 'NSC')",0.0,0.4,0.0
-5,"('BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'PVV')",0.0,0.2,0.0
-6,"('BBB', 'VVD', 'JA21', 'PVV')",0.0,0.0,0.4
-7,"('CDA', 'VVD', 'SGP', 'GL/PvdA', 'NSC')",0.0,0.0,0.2
-8,"('50PLUS', 'BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'JA21', 'PVV')",0.0,0.0,0.2
-9,"('CDA', 'BBB', 'VVD', 'SGP', 'GL/PvdA', 'NSC')",0.0,0.0,0.2
+0,"('PVV', 'FvD', 'BBB', 'VVD')",0.2,0.0,0.0
+1,"('CDA', 'BBB', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2,0.0,0.0
+2,"('PVV', 'FvD', 'BBB', 'SGP', 'VVD')",0.2,0.0,0.0
+3,"('PVV', 'BBB', 'VVD')",0.2,0.0,0.0
+4,"('CDA', 'D66', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2,0.0,0.0
+5,"('CDA', 'BBB', 'D66', 'NSC', 'VVD', 'GL/PvdA')",0.0,0.4,0.0
+6,"('PVV', 'BBB', 'JA21', 'NSC', 'VVD')",0.0,0.2,0.0
+7,"('CDA', 'BBB', 'VVD', 'GL/PvdA')",0.0,0.2,0.0
+8,"('PVV', 'BBB', 'NSC', 'VVD')",0.0,0.2,0.0
+9,"('PVV', 'BBB', 'SGP', 'NSC', 'VVD')",0.0,0.0,0.2
+10,"('CDA', 'D66', 'Volt', 'CU', 'VVD', 'GL/PvdA')",0.0,0.0,0.2
+11,"('CDA', 'D66', 'VVD', 'GL/PvdA')",0.0,0.0,0.2
+12,"('PVV', 'BBB', 'JA21', 'VVD')",0.0,0.0,0.2
+13,"('CDA', 'D66', 'SP', 'VVD', 'GL/PvdA')",0.0,0.0,0.2

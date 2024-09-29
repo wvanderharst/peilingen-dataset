@@ -30,13 +30,14 @@ def tablecreator(table,df):
 
 
 def distance(parties,table):
+    #discribes the amount of distance in a coalition normalized for amount of lines but with (1+(len(parties)**1,5/25))) correction
     totaldistance = 0
     for i in range(0,len(parties)):
         for j in range(0,len(parties)):
             party1 = parties[i]
             party2 = parties[j] 
             totaldistance += table[party1][party2]**2
-    return totaldistance / ((len(parties)**2 +len(parties))/2) * (1+(len(parties)/50))
+    return totaldistance / ((len(parties)**2 +len(parties))/2) * (1+(len(parties)**2.4/25))
 
 def seats(parties,df):
     count = 0
@@ -75,8 +76,9 @@ def possiblecombinations(df_distance,table,df):
     for i in range(len(df_distance)):
         mogregering = df_distance.loc[i,"Key"] 
         mogregering = superpartyhate(mogregering)
-        if  populism > 0:
-            mogregering = partyhate(mogregering) 
+        if seats(["PVV"],df) < 45:
+            if  populism > 0:
+                mogregering = partyhate(mogregering) 
         if seats(mogregering,df) > 75:
             
             count = count + 1 
@@ -149,11 +151,12 @@ def montecarloelection(df):
 df = pd.read_excel("data\Politiek.xlsx")
 df_check = pd.read_excel("Data\politiek - Stable.xlsx")
 
-if df.equals(df_check):
-    print("JA")
-    df_distance = pd.read_csv("Data\distances.csv")
-else:
-    print("Nee")
+#with new distance formula or new matrix
+checking = 8
+
+
+if checking == 8:
+    print("Ja1")
     df2 = load_data()
     df3 = df.merge(df2, how='outer', on='Partij')
 
@@ -171,6 +174,7 @@ else:
     df_distance.to_csv("data\distances.csv")
     df.to_excel("Data\politiek - Stable.xlsx")
 
+df_distance = pd.read_csv("Data\distances.csv")
 
 df2 = load_data()
 df3 = df.merge(df2, how='outer', on='Partij')
@@ -188,7 +192,7 @@ table2 = tablecreator(table,df4)
 
 #mainscript
 
-N =  5
+N =  100
 P= 5
 allparties = set(df3["Partij"])
 

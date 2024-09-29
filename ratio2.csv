@@ -1,4 +1,6 @@
 ,bar,count
-0,"('BBB', 'VVD', 'NSC', 'JA21', 'PVV')",0.4
-1,"('CDA', 'BBB', 'VVD', 'GL/PvdA', 'NSC')",0.4
-2,"('BBB', 'VVD', 'FvD', 'SGP', 'NSC', 'JA21', 'PVV')",0.2
+0,"('PVV', 'FvD', 'BBB', 'VVD')",0.2
+1,"('CDA', 'BBB', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2
+2,"('PVV', 'FvD', 'BBB', 'SGP', 'VVD')",0.2
+3,"('PVV', 'BBB', 'VVD')",0.2
+4,"('CDA', 'D66', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2
