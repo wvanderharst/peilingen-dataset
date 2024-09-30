@@ -233,19 +233,16 @@ ratio1 =  ratio1.rename_axis('bar').reset_index()
 ratio2 =  ratio2.rename_axis('bar').reset_index()
 ratio3 =  ratio3.rename_axis('bar').reset_index()
 
-ratio1.to_csv("ratio2.csv")
 
 
 full = pd.merge(ratio1,ratio2,on = "bar", how = "outer")
 full = pd.merge(full,ratio3,on = "bar", how = "outer")
 
-full.to_csv("test1.csv")
 full = full.fillna(0)
 
 
 partygov = pd.DataFrame(np.zeros((4,len(allparties))),columns=list(allparties)
                          )
-full.to_csv("test2.csv")
 
 for j in allparties:
     for i in range(0,len(full)):
