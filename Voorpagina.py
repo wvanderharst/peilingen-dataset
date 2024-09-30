@@ -46,12 +46,9 @@ st.dataframe(
 
 st.bar_chart(df_filtered2,x="Partij",y="Zetels")
 
-<<<<<<< HEAD
 # Display the data as an Altair chart using `st.altair_chart`.
 df_chart = pd.melt(
     df_filtered2.reset_index(), 
 )
 
 
-=======
->>>>>>> 2c8c37ef17633d861900a0fd058e494a18bb9108
