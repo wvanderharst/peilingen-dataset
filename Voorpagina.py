@@ -1,6 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 
 # Show the page title and description.
 st.set_page_config(page_title="Peilingen")
@@ -19,7 +20,7 @@ st.write(
 
 @st.cache_data
 def load_data():
-    df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
+    df = pd.read_csv("data/partygov.csv")
     return df
 
 
@@ -35,20 +36,29 @@ partij = st.multiselect(
 
 # Filter the dataframe based on the widget input and reshape it.
 df_filtered = df[(df["Partij"].isin(partij)) ]
-df_filtered2 = df_filtered[["Partij","Percentage","Zetels"]]
-if len(df_filtered2.Partij.unique())>1:
-    df_filtered2.loc['total']= df_filtered2.sum()
+df_filtered2 = df_filtered[["Partij","3"]].reset_index()
+#if len(df_filtered2.Partij.unique())>1:
+#    df_filtered2.loc['total']= df_filtered2.sum()
 
 # Display the data as a table using `st.dataframe`.
 st.dataframe(
     df_filtered2
 )
 
-st.bar_chart(df_filtered2,x="Partij",y="Zetels")
+st.bar_chart(df_filtered2,x="Partij",y="3")
 
-# Display the data as an Altair chart using `st.altair_chart`.
-df_chart = pd.melt(
-    df_filtered2.reset_index(), 
-)
+st.write(df_filtered2["Partij"].tolist())
+
+for i in range(len(df_filtered2["3"])):
+    labels = 'Coaltitie', 'Oppositie'
+    sizes = [df_filtered2["3"][i], 100 - df_filtered2["3"][i] ]
+    explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Hogs')
+
+    fig1, ax1 = plt.subplots()
 
 
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.title(df_filtered2["Partij"][i])
+    st.pyplot(fig1)
