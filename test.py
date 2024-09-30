@@ -152,7 +152,7 @@ df = pd.read_excel("data\Politiek.xlsx")
 df_check = pd.read_excel("Data\politiek - Stable.xlsx")
 
 #with new distance formula or new matrix
-checking = 8
+checking = 7
 
 
 if checking == 8:

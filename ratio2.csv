@@ -1,6 +1,37 @@
 ,bar,count
-0,"('PVV', 'FvD', 'BBB', 'VVD')",0.2
-1,"('CDA', 'BBB', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2
-2,"('PVV', 'FvD', 'BBB', 'SGP', 'VVD')",0.2
-3,"('PVV', 'BBB', 'VVD')",0.2
-4,"('CDA', 'D66', 'CU', 'NSC', 'VVD', 'GL/PvdA')",0.2
+0,"('PVV', 'BBB', 'VVD')",0.13
+1,"('PVV', 'BBB', 'VVD', 'NSC')",0.11
+2,"('PVV', 'BBB', 'VVD', 'FvD', 'NSC')",0.06
+3,"('BBB', 'VVD', 'GL/PvdA', 'CDA', 'NSC')",0.06
+4,"('BBB', 'VVD', 'D66', 'GL/PvdA', 'CDA')",0.05
+5,"('BBB', 'VVD', 'D66', 'GL/PvdA', 'CDA', 'NSC')",0.04
+6,"('VVD', 'GL/PvdA', 'CDA', 'NSC')",0.04
+7,"('VVD', 'CU', 'D66', 'GL/PvdA', 'CDA')",0.04
+8,"('PVV', 'BBB', 'VVD', 'JA21', 'NSC')",0.04
+9,"('VVD', 'D66', 'GL/PvdA', 'CDA')",0.04
+10,"('BBB', 'VVD', 'GL/PvdA', 'CDA')",0.03
+11,"('PVV', 'BBB', 'VVD', 'SGP', 'NSC')",0.03
+12,"('PVV', 'BBB', 'VVD', 'FvD', 'SGP', 'NSC')",0.03
+13,"('BBB', 'VVD', 'D66', 'GL/PvdA', 'NSC')",0.03
+14,"('PVV', 'BBB', 'VVD', 'FvD', 'CU', 'SGP', 'NSC')",0.02
+15,"('PVV', 'BBB', 'VVD', 'FvD')",0.02
+16,"('VVD', 'CU', 'D66', 'GL/PvdA', 'CDA', 'NSC')",0.02
+17,"('VVD', 'Volt', 'D66', 'GL/PvdA', 'CDA')",0.02
+18,"('VVD', 'D66', 'GL/PvdA', 'CDA', 'NSC')",0.02
+19,"('BBB', 'VVD', 'Volt', 'D66', 'GL/PvdA', 'CDA')",0.01
+20,"('PVV', 'VVD', 'FvD')",0.01
+21,"('BBB', 'VVD', 'SGP', 'GL/PvdA', 'CDA', 'NSC')",0.01
+22,"('BBB', 'VVD', 'CU', 'D66', 'GL/PvdA', 'CDA', 'NSC')",0.01
+23,"('BBB', 'VVD', 'GL/PvdA', 'NSC')",0.01
+24,"('PVV', 'BBB', 'VVD', 'FvD', 'JA21', 'SGP', 'NSC')",0.01
+25,"('VVD', 'SP', 'D66', 'GL/PvdA')",0.01
+26,"('PVV', 'VVD', 'SGP')",0.01
+27,"('BBB', 'VVD', 'SP', 'D66', 'GL/PvdA', 'CDA')",0.01
+28,"('BBB', 'VVD', 'D66', 'GL/PvdA')",0.01
+29,"('PVV', 'BBB', 'VVD', 'FvD', 'SGP')",0.01
+30,"('VVD', 'GL/PvdA')",0.01
+31,"('PVV', 'BBB', 'VVD', 'FvD', 'JA21')",0.01
+32,"('VVD', 'CU', 'D66', 'GL/PvdA')",0.01
+33,"('Denk', 'SP', 'D66', 'GL/PvdA', 'CDA')",0.01
+34,"('PVV', 'BBB', 'VVD', 'JA21', 'SGP', 'NSC')",0.01
+35,"('Denk', 'CU', 'PvdD', 'D66', 'GL/PvdA', 'CDA')",0.01
