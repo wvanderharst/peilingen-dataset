@@ -4,18 +4,10 @@ import streamlit as st
 
 # Show the page title and description.
 st.set_page_config(page_title="Peilingen")
-<<<<<<< HEAD
 st.title("Peilingen")
 st.write(
     """
     In nederland wordt gekeken naar peilingen van 
-=======
-
-st.title("Peilingen")
-st.write(
-    """
-    In Nederland wordt gekeken naar peilingen van 
->>>>>>> 2c8c37ef17633d861900a0fd058e494a18bb9108
     individuele partijen, terwijl we een land van
       coalties leven. Op mijn website maak ik duidelijk wat de coalitie tendesen zijn.
     """
@@ -27,11 +19,7 @@ st.write(
 
 @st.cache_data
 def load_data():
-<<<<<<< HEAD
     df = pd.read_excel("https://peilingwijzer.tomlouwerse.nl/resources/Cijfers_Peilingwijzer.xlsx")
-=======
-    df = pd.read_csv("data\partygov.csv")
->>>>>>> 2c8c37ef17633d861900a0fd058e494a18bb9108
     return df
 
 
