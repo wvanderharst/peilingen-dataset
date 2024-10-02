@@ -302,3 +302,13 @@ def findalldistances(allparties,table):
 
     # Sort the DataFrame by 'Key'
     df_distance = df_distance.sort_values(by='Value')
+
+def all_in_list(short_list, lj ong_list):
+    return set(short_list).issubset(set(long_list))
+
+# Example usage
+short_list = [1, 2, 3]
+long_list = [0, 1, 2, 3, 4, 5]
+
+result = all_in_list(short_list, long_list)
+print(result)  # Output: True
