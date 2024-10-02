@@ -66,21 +66,33 @@ def findalldistances(allparties,table):
 
     return df_distance
 
+def linear_mapping(x):
+    if x < 20:
+        return 0  # Optional: handle inputs less than 20
+    elif x > 45:
+        return 1  # Optional: handle inputs greater than 45
+    else:
+        return (x / 25) - 0.8
+
+def probabilistic_output(probability):
+    if not (0 <= probability <= 1):
+        raise ValueError("Probability must be between 0 and 1.")
+    
+    return 1 if random.random() < probability else 0
 
 def possiblecombinations(df_distance,table,df):
     regering = ""
     secondregering = ""
     thirdregering = ""
-    populism = np.random.normal(0,1) 
     count = 0
     for i in range(len(df_distance)):
         mogregering = df_distance.loc[i,"Key"] 
         mogregering = superpartyhate(mogregering)
-        if seats(["PVV"],df) < 45:
-            if  populism > 0:
-                mogregering = partyhate(mogregering) 
+        mapped = linear_mapping(seats(["PVV"],df))
+        probabilistic_output(mapped)
+        if probabilistic_output(mapped) == 1:
+            mogregering = partyhate(mogregering)
         if seats(mogregering,df) > 75:
-            
             count = count + 1 
             dist = df_distance.loc[i,"Value"] 
             if count == 1 : 
@@ -113,7 +125,17 @@ def superpartyhate(parties):
         elif "GL/PvdA" in parties:           
             parties = []
         elif "Denk" in parties:           
-            parties = []    
+            parties = []
+    if "FVD" in parties:
+        if "CDA" in parties:           
+            parties = []
+        elif "D66" in parties:           
+            parties = []
+        elif "GL/PvdA" in parties:           
+            parties = []
+        elif "Denk" in parties:           
+            parties = []
+                
     if "BBB" in parties:
         if "PvdD" in parties:           
             parties = []
@@ -128,7 +150,8 @@ def montecarloelection(df):
         #CAT = categorizevariance(name,dataframe)
         CAT = 2
         df9.loc[i, 'Zetels'] = df9.loc[i, 'Zetels'] + np.random.normal(0,( 0.15 * CAT  * df9.loc[i, 'Zetels'])) 
-        
+        if np.random.normal(0,1) > 2:
+            df9.loc[i, 'Zetels'] = df9.loc[i, 'Zetels'] + 5
         if df9.loc[i, 'Zetels'] < 0:
             df9.loc[i, 'Zetels'] = 0
         elif df9.loc[i, 'Zetels'] > 50:
@@ -148,8 +171,7 @@ def montecarloelection(df):
 
 
 #load data
-df = pd.read_excel("data\Politiek.xlsx")
-df_check = pd.read_excel("Data\politiek - Stable.xlsx")
+df = pd.read_excel(".data\Politiek.xlsx")
 
 #with new distance formula or new matrix
 checking = 7
@@ -172,9 +194,8 @@ if checking == 8:
     findalldistances(allparties,table)
     df_distance = findalldistances(allparties,table)
     df_distance.to_csv("data\distances.csv")
-    df.to_excel("Data\politiek - Stable.xlsx")
 
-df_distance = pd.read_csv("Data\distances.csv")
+df_distance = pd.read_csv(".data\distances.csv")
 
 df2 = load_data()
 df3 = df.merge(df2, how='outer', on='Partij')
@@ -261,3 +282,23 @@ partygov = partygov.reset_index()
 partygov.rename(columns={'index': 'Partij'}, inplace=True)
 
 partygov.to_csv("data\partygov.csv")
+
+def (allparties,table):
+    #for L in range(len(allparties) + 1):
+    for L in range(1,4):
+        for subset in itertools.combinations(allparties, L):
+            
+
+def findalldistances(allparties,table):
+    pairs_dict = {}
+    #for L in range(len(allparties) + 1):
+    for L in range(1,12):
+        for subset in itertools.combinations(allparties, L):
+            mogregering = list(subset)
+            pairs_dict[subset] = dist
+    
+    # Sort by values
+    df_distance = pd.DataFrame(list(pairs_dict.items()), columns=['Key', 'Value'])
+
+    # Sort the DataFrame by 'Key'
+    df_distance = df_distance.sort_values(by='Value')
