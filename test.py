@@ -66,6 +66,28 @@ def findalldistances(allparties,table):
 
     return df_distance
 
+def count_instances(long_list, short_list):
+    return all(item in long_list for item in short_list)
+
+
+def findallworkingstogether(allparties):
+    pairs_dict = {}
+    #for L in range(len(allparties) + 1):
+    for L in range(1,len(allparties)):
+        for subset in itertools.combinations(allparties, L):
+            
+            all_in_list(list(subset) , df['reger'][0])
+            df['all_present'] = df['reger'].apply(lambda x: count_instances(x, subset))
+
+            # Count how many times all instances in the short list are present
+            total_count = df['all_present'].sum()
+
+            pairs_dict[subset] = total_count
+    return pairs_dict
+
+
+
+
 def linear_mapping(x):
     if x < 20:
         return 0  # Optional: handle inputs less than 20
@@ -283,32 +305,9 @@ partygov.rename(columns={'index': 'Partij'}, inplace=True)
 
 partygov.to_csv("data\partygov.csv")
 
-def (allparties,table):
-    #for L in range(len(allparties) + 1):
-    for L in range(1,4):
-        for subset in itertools.combinations(allparties, L):
-            
 
-def findalldistances(allparties,table):
-    pairs_dict = {}
-    #for L in range(len(allparties) + 1):
-    for L in range(1,12):
-        for subset in itertools.combinations(allparties, L):
-            mogregering = list(subset)
-            pairs_dict[subset] = dist
-    
-    # Sort by values
-    df_distance = pd.DataFrame(list(pairs_dict.items()), columns=['Key', 'Value'])
+dictor = findallworkingstogether(allparties)
 
-    # Sort the DataFrame by 'Key'
-    df_distance = df_distance.sort_values(by='Value')
+df_multiple = pd.DataFrame(list(dictor.items()), columns=['Key', 'Value'])
 
-def all_in_list(short_list, lj ong_list):
-    return set(short_list).issubset(set(long_list))
-
-# Example usage
-short_list = [1, 2, 3]
-long_list = [0, 1, 2, 3, 4, 5]
-
-result = all_in_list(short_list, long_list)
-print(result)  # Output: True
+df_multiple.to_csv("data\partygovmultiple.csv")
