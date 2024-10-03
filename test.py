@@ -157,7 +157,7 @@ def superpartyhate(parties):
             parties = []
         elif "Denk" in parties:           
             parties = []  
-        elif "VOLT" in parties:           
+        elif "Volt" in parties:           
             parties = []                          
     if "BBB" in parties:
         if "PvdD" in parties:           
