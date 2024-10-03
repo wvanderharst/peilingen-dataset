@@ -3,6 +3,7 @@ import numpy as np
 import itertools
 import time
 import random
+import subprocess
 ## funcations 
 
 
@@ -236,7 +237,7 @@ table2 = tablecreator(table,df4)
 
 #mainscript
 
-N =  10
+N = 500
 P= 5
 allparties = set(df3["Partij"])
 
@@ -313,3 +314,5 @@ dictor = findallworkingstogether(allparties,man,number,N)
 df_multiple = pd.DataFrame(list(dictor.items()), columns=['Key', 'Value'])
 
 df_multiple.to_csv("data\partygovmultiple.csv")
+
+subprocess.run(['python', 'test2.py'])

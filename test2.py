@@ -29,7 +29,8 @@ columns_to_keep = ['Partij', 'Zetels']
 df1 = df[columns_to_keep]
 
 for index, row in df1.iterrows():
-    partij = row['Partij'].replace('/', '')
+    partij = row['Partij']
+    partij1 = row['Partij'].replace('/', '')
     zetels = row['Zetels']
     
     # Filter df2 for the current partij
@@ -52,7 +53,7 @@ for index, row in df1.iterrows():
     filtered_df3 = df3[df3.index.isin(final_list)]
 
     # Save to CSV, naming the file according to the partij
-    filtered_df3.to_csv(f'data_conditional/{partij}.csv', index=False)
+    filtered_df3.to_csv(f'data_conditional/{partij1}.csv', index=False)
 
     #print(f'Saved {partij}.csv with filtered data.')
 

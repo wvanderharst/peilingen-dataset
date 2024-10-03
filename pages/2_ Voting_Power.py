@@ -25,6 +25,7 @@ def load_data3():
     return df
 
 length = load_data3()
+lengthN = len(length.columns)-2
 
 df3 = load_data2()
 
@@ -39,8 +40,13 @@ allparties = set(df3["Partij"])
 
 df['reger'] = df['reger'].apply(convert_string_to_list)
 
+st.write(all_in_list("VVD",partij))
+
+df= df[df['reger'].apply(lambda x: partij in x)]
+
 st.dataframe(
-    df['reger'].value_counts())
+    df['reger'].value_counts()/lengthN)
 
+df8 = (df['reger'].value_counts()/lengthN).sum()
 
-st.write(len(length))
+st.write(df8)
