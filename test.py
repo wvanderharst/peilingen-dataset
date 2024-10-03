@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import itertools
 import time
+import random
 ## funcations 
 
 
@@ -70,13 +71,11 @@ def count_instances(long_list, short_list):
     return all(item in long_list for item in short_list)
 
 
-def findallworkingstogether(allparties):
+def findallworkingstogether(allparties,df):
     pairs_dict = {}
     #for L in range(len(allparties) + 1):
     for L in range(1,len(allparties)):
         for subset in itertools.combinations(allparties, L):
-            
-            all_in_list(list(subset) , df['reger'][0])
             df['all_present'] = df['reger'].apply(lambda x: count_instances(x, subset))
 
             # Count how many times all instances in the short list are present
@@ -193,7 +192,7 @@ def montecarloelection(df):
 
 
 #load data
-df = pd.read_excel(".data\Politiek.xlsx")
+df = pd.read_excel("data\Politiek.xlsx")
 
 #with new distance formula or new matrix
 checking = 7
@@ -217,7 +216,7 @@ if checking == 8:
     df_distance = findalldistances(allparties,table)
     df_distance.to_csv("data\distances.csv")
 
-df_distance = pd.read_csv(".data\distances.csv")
+df_distance = pd.read_csv("data\distances.csv")
 
 df2 = load_data()
 df3 = df.merge(df2, how='outer', on='Partij')
@@ -306,7 +305,7 @@ partygov.rename(columns={'index': 'Partij'}, inplace=True)
 partygov.to_csv("data\partygov.csv")
 
 
-dictor = findallworkingstogether(allparties)
+dictor = findallworkingstogether(allparties,man)
 
 df_multiple = pd.DataFrame(list(dictor.items()), columns=['Key', 'Value'])
 
