@@ -71,17 +71,18 @@ def count_instances(long_list, short_list):
     return all(item in long_list for item in short_list)
 
 
-def findallworkingstogether(allparties,df):
+def findallworkingstogether(allparties,df,number,N):
     pairs_dict = {}
     #for L in range(len(allparties) + 1):
-    for L in range(1,len(allparties)):
+    for L in range(1,number):
         for subset in itertools.combinations(allparties, L):
             df['all_present'] = df['reger'].apply(lambda x: count_instances(x, subset))
 
             # Count how many times all instances in the short list are present
             total_count = df['all_present'].sum()
 
-            pairs_dict[subset] = total_count
+
+            pairs_dict[subset] = total_count/N
     return pairs_dict
 
 
@@ -155,8 +156,9 @@ def superpartyhate(parties):
         elif "GL/PvdA" in parties:           
             parties = []
         elif "Denk" in parties:           
-            parties = []
-                
+            parties = []  
+        elif "VOLT" in parties:           
+            parties = []                          
     if "BBB" in parties:
         if "PvdD" in parties:           
             parties = []
@@ -234,7 +236,7 @@ table2 = tablecreator(table,df4)
 
 #mainscript
 
-N =  100
+N =  10
 P= 5
 allparties = set(df3["Partij"])
 
@@ -242,7 +244,7 @@ df11 = pd.DataFrame()
 man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","dis2","dis3"] )
 
 for i in range(0,N):
-    start_time = time.time()
+    print(i)
 
     df7 = montecarloelection(df3)
     note = possiblecombinations(df_distance,table2,df7)
@@ -305,7 +307,8 @@ partygov.rename(columns={'index': 'Partij'}, inplace=True)
 partygov.to_csv("data\partygov.csv")
 
 
-dictor = findallworkingstogether(allparties,man)
+number = 5
+dictor = findallworkingstogether(allparties,man,number,N)
 
 df_multiple = pd.DataFrame(list(dictor.items()), columns=['Key', 'Value'])
 

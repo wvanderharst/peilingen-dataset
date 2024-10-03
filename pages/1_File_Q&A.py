@@ -61,25 +61,16 @@ partij = st.multiselect(
 
 
 df_multiple = df_multiple.sort_values(by='Value', ascending=False)
-
+df_multiple2 = df_multiple.sort_values(by='Value', ascending=False)
 # Reset the index if desired
 #df_multiple = df_multiple.reset_index(drop=True, inplace=True)
 
-df_multiple =df_multiple[df_multiple['Key'].apply(lambda x: contains_all(x, partij))]
-
+df_multiple = df_multiple[df_multiple['Key'].apply(lambda x: contains_all(x, partij))]
+df_multiple= df_multiple[df_multiple['Value'] != 0]
 st.dataframe(
     df_multiple)
 
 
+df_filtered = df_multiple2[df_multiple2['Key'].apply(lambda x: len(x) <= 1)]
 
-
-
-df_filtered = df3[(df3["Partij"].isin(partij)) ]
-df_filtered2 = df_filtered[["Partij","3"]].reset_index()
-#if len(df_filtered2.Partij.unique())>1:
-#    df_filtered2.loc['total']= df_filtered2.sum()
-
-# Display the data as a table using `st.dataframe`.
-st.dataframe(
-    df_filtered2
-)
+st.dataframe(df_filtered)
