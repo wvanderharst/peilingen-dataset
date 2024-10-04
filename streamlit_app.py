@@ -11,9 +11,20 @@ st.set_page_config(page_title="Peilingen")
 st.title("Peilingen")
 st.write(
     """
-    In nederland wordt gekeken naar peilingen van 
-    individuele partijen, terwijl we een land van
-      coalties leven. Op mijn website maak ik duidelijk wat de coalitie tendesen zijn.
+    In een gefragmenteerd partijensysteem, zoals we dat in Nederland zien, is het belangrijk om 
+    niet alleen te kijken naar de peilingen van individuele partijen, maar vooral naar de waarschijnlijkheden 
+    van mogelijke coalities. Dit komt omdat de politieke realiteit vaak wordt gekenmerkt door meerdere partijen 
+    die samen moeten werken om een regering te vormen.
+    Peilingen geven ons inzicht in de steun voor afzonderlijke partijen, maar ze zeggen weinig over hoe deze partijen 
+    zich tot elkaar verhouden en welke combinaties mogelijk zijn. In een systeem met veel partijen kunnen de voorkeuren 
+    van kiezers snel verschuiven, waardoor de kansen op samenwerking en het vormen van een meerderheidscoalitie steeds 
+    relevanter worden.
+    Door de focus te verleggen naar coalitievorming, kunnen we beter begrijpen welke partijen bereid zijn om samen te werken, 
+    welke ideologische overeenkomsten er zijn en hoe de politieke dynamiek eruitziet. Dit biedt niet alleen een realistischer 
+    beeld van de politieke toekomst, maar kan ook de stabiliteit van de regering ten goede komen.
+    In dit licht wordt het duidelijk dat het analyseren van coalitiewaarschijnlijkheden ons helpt om een bredere en meer samenhangende 
+    kijk op het politieke landschap te ontwikkelen. Hierdoor kunnen kiezers en analisten niet alleen anticiperen op de uitkomsten van 
+    verkiezingen, maar ook op de beleidsvorming en de richting van het bestuur na de verkiezingen.
     """
 )
 

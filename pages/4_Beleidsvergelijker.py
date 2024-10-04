@@ -8,4 +8,4 @@ def load_data():
 
 
 df = load_data()
-st.write(df)
+st.write("Op deze pagina kun je ontdekken welke individuele partij het meest overeenkomt met het beleid van de huidige of potentiële coalitie.")

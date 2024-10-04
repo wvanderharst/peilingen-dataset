@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import ast
 import itertools
 
-st.title("Meest voorkomende combinates")
+st.title("Coalitieverwachtingen: Inzicht in de Politieke Toekomst")
+
+st.write("Op de speciaal ontworpen pagina voor het analyseren van de meest waarschijnlijke coalities krijg je inzicht in de dynamiek van de huidige politieke verhoudingen, met het oog op de aankomende Tweede Kamerverkiezingen over drie maanden. Dit model is geavanceerd en houdt rekening met de recente peilingen, historische samenwerking tussen partijen, en ideologische raakvlakken.")
 
 @st.cache_data
 def load_data():

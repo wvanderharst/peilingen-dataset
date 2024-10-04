@@ -7,6 +7,8 @@ import itertools
 
 
 
+
+
 def all_in_list(short_list, long_list):
     return set(short_list).issubset(set(long_list))
 
@@ -25,6 +27,11 @@ def load_data3():
 def load_data4():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/piel.csv")
     return df
+
+
+st.title("Jouw Stem, Jouw Impact")
+st.write("Op deze pagina ontdek je de impact van jouw stem op de politieke toekomst van ons land. Elke stem telt, en in een gefragmenteerd partijensysteem zoals het onze, kan jouw keuze de samenstelling van de regering bepalen. Hier krijg je inzicht in hoe verschillende stemgedragingen kunnen leiden tot uiteenlopende coalities en beleidsrichtingen. Het model geeft jouw stem een impact van vijf Zetels")
+
 
 length = load_data3()
 lengthN = len(length.columns)-2
