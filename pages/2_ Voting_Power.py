@@ -24,15 +24,21 @@ def load_data3():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/elections.csv")
     return df
 
+def load_data4():
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/piel.csv")
+    return df
+
+
 length = load_data3()
 lengthN = len(length.columns)-2
+df4 = load_data4()
 
 df3 = load_data2()
 
 # Show a multiselect widget with the genres using `st.multiselect`.
 partij = st.selectbox(
     "Partij",
-    df3.Partij.unique())
+    df4.Partij.unique())
 partij1 = partij.replace('/', '')
 
 df = pd.read_csv(f'https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data_conditional/{partij1}.csv')
