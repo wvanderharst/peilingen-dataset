@@ -17,11 +17,11 @@ def contains_all(long_list, short_list):
     return all(item in long_list for item in short_list)
 
 def load_data2():
-    df = pd.read_csv("data/partygov.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygov.csv")
     return df
 
 def load_data3():
-    df = pd.read_csv("data/elections.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/elections.csv")
     return df
 
 length = load_data3()
@@ -35,7 +35,7 @@ partij = st.selectbox(
     df3.Partij.unique())
 partij1 = partij.replace('/', '')
 
-df = pd.read_csv(f'data_conditional/{partij1}.csv')
+df = pd.read_csv(f'https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data_conditional/{partij1}.csv')
 
 allparties = set(df3["Partij"])
 

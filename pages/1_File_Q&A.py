@@ -9,15 +9,15 @@ st.title("Meest voorkomende combinates")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/coalitions.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/coalitions.csv")
     return df
 
 def load_data2():
-    df = pd.read_csv("data/partygov.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygov.csv")
     return df
 
 def load_data3():
-    df = pd.read_csv("data/partygovmultiple.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygovmultiple.csv")
     return df
 
 
@@ -36,7 +36,7 @@ df = load_data()
 df_multiple = load_data3()
 #df2['reger'] = df2['reger'].str.replace('(', '').str.replace(')', '').str.replace(',', '').str.replace("'", '')
 
-df4 = pd.read_csv("data/partygov.csv")
+df4 = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygov.csv")
 
 allparties = set(df4["Partij"])
 
