@@ -1,5 +1,10 @@
 import streamlit as st
+import pandas as pd
+
+@st.cache_data
+def load_data():
+    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygov.csv")
+    return df
 
 
-st.title("Stratagy")
-uploaded_file = st.file_uploader("Upload an article", type=("txt", "md"))
+df = load_data()
