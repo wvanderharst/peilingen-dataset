@@ -16,9 +16,7 @@ def convert_string_to_list(s):
 def contains_all(long_list, short_list):
     return all(item in long_list for item in short_list)
 
-def load_data2():
-    df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/partygov.csv")
-    return df
+
 
 def load_data3():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/elections.csv")
@@ -33,8 +31,6 @@ length = load_data3()
 lengthN = len(length.columns)-2
 
 df4 = load_data4()
-
-df3 = load_data2()
 
 # Show a multiselect widget with the genres using `st.multiselect`.
 partij = st.selectbox(
