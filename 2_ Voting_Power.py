@@ -26,11 +26,6 @@ def load_data4():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/piel.csv")
     return df
 
-<<<<<<< HEAD
-
-=======
-df4 = load_data4()
->>>>>>> c8330876dfd62531e884df798a7eeec6983088f6
 length = load_data3()
 lengthN = len(length.columns)-2
 
