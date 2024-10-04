@@ -39,7 +39,8 @@ partij1 = partij.replace('/', '')
 
 df = pd.read_csv(f'https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data_conditional/{partij1}.csv')
 
-allparties = set(df3["Partij"])
+
+allparties = set(df4["Partij"])
 
 
 df['reger'] = df['reger'].apply(convert_string_to_list)
