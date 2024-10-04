@@ -17,11 +17,11 @@ def contains_all(long_list, short_list):
     return all(item in long_list for item in short_list)
 
 
-
+@st.cache_data
 def load_data3():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/elections.csv")
     return df
-
+@st.cache_data
 def load_data4():
     df = pd.read_csv("https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data/piel.csv")
     return df
