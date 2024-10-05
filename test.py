@@ -219,7 +219,10 @@ if checking == 8:
     df_distance = findalldistances(allparties,table)
     df_distance.to_csv("data\distances.csv")
 
-df_distance = pd.read_csv("data\distances.csv")
+subprocess.run(['python', 'test3.py'])
+
+df_distance = pd.read_csv("data\distance_use.csv")
+
 
 df2 = load_data()
 df3 = df.merge(df2, how='outer', on='Partij')
