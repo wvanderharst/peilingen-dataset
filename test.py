@@ -165,33 +165,82 @@ def superpartyhate(parties):
             parties = []
     return parties 
 
+def copula_simulation(df3,n_samples):
+    parties = df3['Partij'].tolist()
+
+    correlation_matrix =  pd.read_csv("data\Correlation_matrix.csv", index_col=0)
+    correlation_matrix = pd.DataFrame(correlation_matrix, index=parties, columns=parties)
+    correlation_matrix.fillna(0, inplace=True)
+
+    #TEST EMPTY MATRIX
+    #for i in range(len(parties)):
+    #      for j in range(len(parties)):
+    #        correlation_matrix.iat[i, j] = 0
+
+    for i in range(len(parties)):
+        correlation_matrix.iat[i, i] = 1
+
+    # Step 2: Calculate standard deviations based on the current Zetels
+    std_devs = np.maximum((df3['Zetels'] * 0.3).to_numpy(),1) # Scaling factor
+
+    # Step 3: Set means to the current seat estimates
+    mean = df3['Zetels'].values  # Use current seat estimates as means
+
+    # Number of samples to generate
+
+    # Step 4: Generate samples from a multivariate normal distribution
+    covariance = np.diag(std_devs) @ correlation_matrix.to_numpy() @ np.diag(std_devs)
+    #print(covariance)
+
+    samples = np.random.multivariate_normal(mean, covariance, size=n_samples)
+
+    # Step 5: Prepare a DataFrame to store all simulations
+    simulation_results = pd.DataFrame(samples, columns=df3['Partij'])
+
+    # Step 6: Allocate Zetels for each simulation
+    predicted_Zetels_list = []
+
+    for sim in range(n_samples):    
+        # Get the current simulation's votes
+        current_votes = samples[sim]
+
+        # Proportional allocation of Zetels (150 total Zetels)
+        total_votes = np.sum(current_votes)
+        seat_allocation = (current_votes / total_votes) * 150  # Total of 150 Zetels
+
+        seat_allocation = np.maximum(seat_allocation, 0)
+
+        # Round to get integer seat allocation
+        seat_allocation = np.round(seat_allocation).astype(int)
 
 
-def montecarloelection(df):
-    df9 = df[["Partij" , "Zetels"]]
-    for i in range(0,len((df9))):
-        #name = df["Partij"][i]
-        #CAT = categorizevariance(name,dataframe)
-        CAT = 2
-        df9.loc[i, 'Zetels'] = df9.loc[i, 'Zetels'] + np.random.normal(0,( 0.15 * CAT  * df9.loc[i, 'Zetels'])) 
-        if np.random.normal(0,1) > 2:
-            df9.loc[i, 'Zetels'] = df9.loc[i, 'Zetels'] + 5
-        if df9.loc[i, 'Zetels'] < 0:
-            df9.loc[i, 'Zetels'] = 0
-        elif df9.loc[i, 'Zetels'] > 50:
-            df9.loc[i, 'Zetels'] = 50
-    data = 150 * df9["Zetels"]/sum(df9["Zetels"])
-    for i in range(0,len((df9["Zetels"]))):
-        df9.loc[i, 'Zetels'] = round(data[i])
-    
-    while sum(df9["Zetels"]) < 150:
-        i= np.random.randint(0, len(df9["Zetels"]))
-        df9.loc[i, 'Zetels'] += 1
-    while sum(df9["Zetels"]) > 150:
-        i= np.random.randint(0, len(df9["Zetels"]))
-        if df9.loc[i, 'Zetels']>1:
-            df9.loc[i, 'Zetels'] += -1  
-    return df9
+
+        # Correct the seat allocations
+        total_allocated = np.sum(seat_allocation)
+
+        # Adjust if total allocated is not equal to 150
+        while total_allocated != 150:
+            if total_allocated < 150:
+                # Increment the Partij with the highest average vote
+                idx = np.argmax(current_votes)  # Find Partij with the highest vote
+                seat_allocation[idx] += 1  # Increment seat
+            elif total_allocated > 150:
+             # Decrement the Partij with the lowest allocated Zetels
+                idx = np.argmax(seat_allocation)  # Find Partij with the least Zetels
+                seat_allocation[idx] -= 1  # Decrement seat
+
+            total_allocated = np.sum(seat_allocation)  # Recalculate total allocated Zetels
+
+    # Store the corrected seat allocation
+        predicted_Zetels_list.append(seat_allocation)
+
+    # Convert the list to a DataFrame
+    predicted_Zetels_df = pd.DataFrame(predicted_Zetels_list, columns=df3['Partij'])
+
+
+    predicted_Zetels_df.T.to_csv("data/elections.csv")
+    return predicted_Zetels_df.T.reset_index()
+
 
 
 #load data
@@ -241,34 +290,32 @@ table2 = tablecreator(table,df4)
 
 #mainscript
 
-N = 500
+N = 2
 P= 5
 allparties = set(df3["Partij"])
 
 df11 = pd.DataFrame()
 man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","dis2","dis3"] )
 
-for i in range(0,N):
-    print(i)
 
-    df7 = montecarloelection(df3)
-    note = possiblecombinations(df_distance,table2,df7)
-    man.loc[i,"reger"]= note[0]
-    man.loc[i,"reger2"]= note[1]
-    man.loc[i,"reger3"]= note[2]
-    man.loc[i,"dis1"]= note[3]
-    man.loc[i,"dis2"]= note[4]
-    man.loc[i,"dis3"]= note[5]
-    df7 = df7.rename(columns={"Zetels": i})
-    if i == 0:
-        df11 = pd.DataFrame(df7)
-    else:
-        df11 = df11.merge(pd.DataFrame(df7), on='Partij')
+df7 = copula_simulation(df3,N)
+print(df7)
+
+for col in df7.columns[1:]:
+    df77 = df7[['Partij', col]].rename(columns={col: 'Zetels'})
+
+    note = possiblecombinations(df_distance,table2,df77)
+    man.loc[col,"reger"]= note[0]
+    man.loc[col,"reger2"]= note[1]
+    man.loc[col,"reger3"]= note[2]
+    man.loc[col,"dis1"]= note[3]
+    man.loc[col,"dis2"]= note[4]
+    man.loc[col,"dis3"]= note[5]
     
 
 
 man.to_csv("data\coalitions.csv")
-df11.to_csv("data\elections.csv")
+
 
 
 
