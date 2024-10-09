@@ -218,6 +218,7 @@ if checking == 8:
     findalldistances(allparties,table)
     df_distance = findalldistances(allparties,table)
     df_distance.to_csv("data\distances.csv")
+    subprocess.run(['python', 'test4.py'])
 
 subprocess.run(['python', 'test3.py'])
 
