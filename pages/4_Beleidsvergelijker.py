@@ -33,3 +33,7 @@ df = df[df['Key'].apply(lambda x: contains_all(x, partij))]
 st.write(df)
 
 st.write("Op deze pagina kun je ontdekken welke individuele partij het meest overeenkomt met het beleid van de huidige of potentiële coalitie.")
+
+
+st.write("In het geval dat er 2 partijen getest worden en er geen partij tussen ligt, wordt de grootste gekozen")
+
