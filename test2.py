@@ -20,8 +20,6 @@ def load_data3():
 
 df2 = load_data2()
 
-df2 = df2.iloc[:, 1:]
-
 # Specify the columns you want to keep
 columns_to_keep = ['Partij', 'Zetels']
 

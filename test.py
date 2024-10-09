@@ -193,7 +193,9 @@ def copula_simulation(df3,n_samples):
     #print(covariance)
 
     samples = np.random.multivariate_normal(mean, covariance, size=n_samples)
-
+    #Adjustment to correct for non gaussian
+    adjustments = np.where(np.random.rand(n_samples, samples.shape[1]) > 0.975, 5, 0)
+    samples += adjustments    
     # Step 5: Prepare a DataFrame to store all simulations
     simulation_results = pd.DataFrame(samples, columns=df3['Partij'])
 
@@ -290,7 +292,7 @@ table2 = tablecreator(table,df4)
 
 #mainscript
 
-N = 2
+N = 10
 P= 5
 allparties = set(df3["Partij"])
 
@@ -299,7 +301,6 @@ man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","di
 
 
 df7 = copula_simulation(df3,N)
-print(df7)
 
 for col in df7.columns[1:]:
     df77 = df7[['Partij', col]].rename(columns={col: 'Zetels'})
