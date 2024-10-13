@@ -100,24 +100,38 @@ def linear_mapping(x):
 def probabilistic_output(probability):
     if not (0 <= probability <= 1):
         raise ValueError("Probability must be between 0 and 1.")
-    
     return 1 if random.random() < probability else 0
 
-def possiblecombinations(df_distance,table,df):
+def possiblecombinations(df_distance,table,df,rechecker):
     regering = ""
     secondregering = ""
     thirdregering = ""
     count = 0
+    if rechecker == 0:
+        mapped = linear_mapping(seats(["PVV"],df))
+        check = probabilistic_output(mapped) 
+    else:
+        check = 0
+
     for i in range(len(df_distance)):
+        dist = df_distance.loc[i,"Value"] 
+        if dist > 200:
+            if rechecker == 1:
+                wow= 1 
+            else:
+                return possiblecombinations(df_distance,table,df,1) 
         mogregering = df_distance.loc[i,"Key"] 
         mogregering = superpartyhate(mogregering)
-        mapped = linear_mapping(seats(["PVV"],df))
-        probabilistic_output(mapped)
-        if probabilistic_output(mapped) == 1:
+        if check == 1:
             mogregering = partyhate(mogregering)
         if seats(mogregering,df) > 75:
             count = count + 1 
             dist = df_distance.loc[i,"Value"] 
+            if dist > 200:
+                if rechecker == 1:
+                    wow= 1 
+                else:
+                    return possiblecombinations(df_distance,table,df,1)
             if count == 1 : 
                 regering = mogregering
                 totaldistance = dist
@@ -149,6 +163,8 @@ def superpartyhate(parties):
             parties = []
         elif "Denk" in parties:           
             parties = []
+        elif "Volt" in parties:           
+            parties = []   
     if "FVD" in parties:
         if "CDA" in parties:           
             parties = []
@@ -244,16 +260,15 @@ def copula_simulation(df3,n_samples):
     return predicted_Zetels_df.T.reset_index()
 
 
-
+start_time = time.time()
 #load data
-df = pd.read_excel("data\Politiek.xlsx")
+df = pd.read_csv("data\Politiek2023.csv")
 
 #with new distance formula or new matrix
 checking = 7
 
 
 if checking == 8:
-    print("Ja1")
     df2 = load_data()
     df3 = df.merge(df2, how='outer', on='Partij')
 
@@ -290,32 +305,65 @@ table2 = tablecreator(table,df4)
 
 #check
 
+
+
 #mainscript
 
-N = 10
+N = 1000
 P= 5
 allparties = set(df3["Partij"])
 
 df11 = pd.DataFrame()
 man = pd.DataFrame(np.zeros((N,6)),columns=["reger","reger2","reger3","dis1","dis2","dis3"] )
 
+end_time = time.time()
+print("Load data")
+print(end_time - start_time)
 
+
+
+
+start_time = time.time()
 df7 = copula_simulation(df3,N)
+end_time = time.time()
+print("Make copula")
+print(end_time - start_time)
+
+
+
+start_time2 = time.time()
+start_time = time.time()
+
 
 for col in df7.columns[1:]:
     df77 = df7[['Partij', col]].rename(columns={col: 'Zetels'})
 
-    note = possiblecombinations(df_distance,table2,df77)
+    note = possiblecombinations(df_distance,table2,df77,0)
     man.loc[col,"reger"]= note[0]
     man.loc[col,"reger2"]= note[1]
     man.loc[col,"reger3"]= note[2]
     man.loc[col,"dis1"]= note[3]
     man.loc[col,"dis2"]= note[4]
     man.loc[col,"dis3"]= note[5]
+    if col % 25 == 0:
+        elapsed_time = print((time.time() - start_time)/25)
+        start_time = time.time()
+
     
 
 
 man.to_csv("data\coalitions.csv")
+end_time = time.time()
+print("Make elections")
+print(end_time - start_time2)
+
+
+
+
+
+
+
+start_time = time.time()
 
 
 
@@ -368,3 +416,6 @@ df_multiple = pd.DataFrame(list(dictor.items()), columns=['Key', 'Value'])
 df_multiple.to_csv("data\partygovmultiple.csv")
 
 subprocess.run(['python', 'test2.py'])
+end_time = time.time()
+print("Make rest")
+print(end_time - start_time)

@@ -4,7 +4,7 @@ import numpy as np
 import itertools
 
 def load_data():
-    df = pd.read_excel("data/Politiek.xlsx")
+    df = pd.read_csv("data/Politiek2023.csv")
     return df
 
 
