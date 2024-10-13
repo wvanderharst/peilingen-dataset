@@ -45,24 +45,37 @@ partij = st.selectbox(
 partij1 = partij.replace('/', '')
 
 df = pd.read_csv(f'https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data_conditional/{partij1}.csv')
+df2 = pd.read_csv(f'https://raw.githubusercontent.com/wvanderharst/peilingen-dataset/refs/heads/main/data_conditional_low/{partij1}.csv')
 
 
 allparties = set(df4["Partij"])
 
 
 df['reger'] = df['reger'].apply(convert_string_to_list)
+df2['reger'] = df2['reger'].apply(convert_string_to_list)
 
 
 df34= df[df['reger'].apply(lambda x: partij in x)]
+df35= df2[df2['reger'].apply(lambda x: partij in x)]
+
+
+
 
 st.dataframe(
     df['reger'].value_counts()/len(df['reger']))
 
-df8 = df['reger'].value_counts().sum()
-df34 = df34['reger'].value_counts().sum()
+noemer1 = df['reger'].value_counts().sum()
+teller1 = df34['reger'].value_counts().sum()
+num = teller1/noemer1
+
+noemer2 = df2['reger'].value_counts().sum()
+teller2 = df35['reger'].value_counts().sum()
+num2 = teller2/noemer2
+
+
+
 #df8 = (df['reger'].value_counts()/len(df['reger'])).sum()
 #df34 = (df34['reger'].value_counts()/len(df34['reger'])).sum()
-num = df34/df8
 labels = 'Coaltitie', 'Oppositie'
 sizes = [num, 1-num ]
 explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Hogs')
@@ -73,6 +86,19 @@ fig1, ax1 = plt.subplots()
 ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
     shadow=True, startangle=90)
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-plt.title(partij)
+plt.title("Zwevende kiezer stemt op " + partij)
 st.pyplot(fig1)
+
+labels = 'Coaltitie', 'Oppositie'
+sizes = [num2, 1-num2 ]
+explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Hogs')
+
+fig2, ax2 = plt.subplots()
+
+
+ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+    shadow=True, startangle=90)
+ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.title(partij)
+st.pyplot(fig2)
 
